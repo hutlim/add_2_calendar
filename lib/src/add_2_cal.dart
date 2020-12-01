@@ -11,6 +11,7 @@ class Add2Calendar {
     final bool isAdded = await _channel.invokeMethod('add2Cal', <String, dynamic>{
       'title': event.title,
       'desc': event.description,
+      'url': event.url,
       'location': event.location,
       'startDate': event.startDate.millisecondsSinceEpoch,
       'endDate': event.endDate.millisecondsSinceEpoch,

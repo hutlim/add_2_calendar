@@ -11,6 +11,7 @@ class Event {
   Event(
       {@required this.title,
       this.description = '',
+      this.url = '',
       this.location = '',
       @required this.startDate,
       @required this.endDate,

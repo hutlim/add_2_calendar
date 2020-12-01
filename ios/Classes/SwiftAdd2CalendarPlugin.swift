@@ -25,11 +25,13 @@ public class SwiftAdd2CalendarPlugin: NSObject, FlutterPlugin {
           let args = call.arguments as! [String:Any]
           let title = args["title"] as! String
           let desc = args["desc"] as! String
+	  let url = args["url"] as! URL
           let location = args["location"] as! String
           let timeZone = TimeZone(identifier: args["timeZone"] as! String)
           
           addEventToCalendar(title: title,
                              description: desc,
+			     url: url,
                              location: location,
                              startDate: Date(milliseconds: (args["startDate"] as! Double)),
                              endDate: Date(milliseconds: (args["endDate"] as! Double)),
@@ -46,7 +48,7 @@ public class SwiftAdd2CalendarPlugin: NSObject, FlutterPlugin {
       }
     }
 
-    private func addEventToCalendar(title: String!, description: String, location: String, startDate: Date, endDate: Date, timeZone: TimeZone?, alarmInterval: Double, allDay: Bool, completion: ((_ success: Bool) -> Void)? = nil) {
+    private func addEventToCalendar(title: String!, description: String, url: URL, location: String, startDate: Date, endDate: Date, timeZone: TimeZone?, alarmInterval: Double, allDay: Bool, completion: ((_ success: Bool) -> Void)? = nil) {
         let eventStore = EKEventStore()
         
         eventStore.requestAccess(to: .event, completion: { [weak self] (granted, error) in
@@ -62,6 +64,7 @@ public class SwiftAdd2CalendarPlugin: NSObject, FlutterPlugin {
                 }
                 event.location = location
                 event.notes = description
+		event.url = url
                 event.isAllDay = allDay
                 self?.presentCalendarModalToAddEvent(event, eventStore: eventStore, completion: completion)
             } else {
