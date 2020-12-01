@@ -25,7 +25,7 @@ public class SwiftAdd2CalendarPlugin: NSObject, FlutterPlugin {
           let args = call.arguments as! [String:Any]
           let title = args["title"] as! String
           let desc = args["desc"] as! String
-	  let url = args["url"] as! URL
+	  let url = Url(string: args["url"] as! String)
           let location = args["location"] as! String
           let timeZone = TimeZone(identifier: args["timeZone"] as! String)
           
@@ -50,7 +50,6 @@ public class SwiftAdd2CalendarPlugin: NSObject, FlutterPlugin {
 
     private func addEventToCalendar(title: String!, description: String, url: URL, location: String, startDate: Date, endDate: Date, timeZone: TimeZone?, alarmInterval: Double, allDay: Bool, completion: ((_ success: Bool) -> Void)? = nil) {
         let eventStore = EKEventStore()
-        
         eventStore.requestAccess(to: .event, completion: { [weak self] (granted, error) in
             if (granted) && (error == nil) {
                 let event = EKEvent(eventStore: eventStore)
